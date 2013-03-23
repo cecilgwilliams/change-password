@@ -1,0 +1,69 @@
+@(userForm: Form[User])
+
+@import helper._
+
+@main("Password Reset") {
+
+<body bgcolor="#999999" xmlns="http://www.w3.org/1999/html">
+
+<h1>Password Reset</h1>
+
+<h2>Please enter your information</h2>
+
+<table>
+
+    <tr>
+        <td>
+
+
+            @form(routes.PasswordReset.reset) {
+
+            @inputText(userForm("userLoginId"))
+            @inputPassword(userForm("currentPassword"))
+            @inputPassword(userForm("newPassword"))
+
+            <input type="submit" value="Reset">
+
+            }
+
+        </td>
+
+        <td>
+
+            1. Passwords must be a minimum of 8 characters long.
+            </br>
+            </br>
+            2. Passwords must contain characters from three of the following four categories:
+            </br>
+            - Uppercase characters (A-Z)
+            </br>
+            - Lowercase characters (a-z)
+            </br>
+            - Base 10 digits (0-9)
+            </br>
+            - Non alphanumeric (such as !, ?, & etc.)
+            </br>
+            </br>
+            3. Passwords cannot contain all or part of the user's account name.
+            </br>
+            </br>
+            4. The 9 most recent passwords cannot be recycled.
+            </br>
+            (The previous 8 stored in history plus the current password.)
+            </br>
+            </br>
+            5. Passwords cannot be based upon dictionary words.
+            </br>
+            </br>
+            6. Passwords cannot be changed more than once every 3 days.
+            </br>
+
+        </td>
+
+    </tr>
+
+</table>
+
+</body>
+
+}

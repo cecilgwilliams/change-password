@@ -1,6 +1,6 @@
 // @SOURCE:/Volumes/MacProHD/cecil/change-password/conf/routes
-// @HASH:f904f23acbfbb0ded1d9ae85b262187e14e562de
-// @DATE:Sat Mar 23 12:03:29 CDT 2013
+// @HASH:368f742aa8518c3b61c7c950be9f26a357ed0207
+// @DATE:Sat Mar 23 12:52:41 CDT 2013
 
 
 import play.core._
@@ -32,10 +32,18 @@ lazy val defaultPrefix = { if(Routes.prefix.endsWith("/")) "" else "/" }
 private[this] lazy val controllers_Application_index0 = Route("GET", PathPattern(List(StaticPart(Routes.prefix))))
         
 
-// @LINE:9
-private[this] lazy val controllers_Assets_at1 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("assets/"),DynamicPart("file", """.+"""))))
+// @LINE:7
+private[this] lazy val controllers_PasswordReset_index1 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("reset"))))
         
-def documentation = List(("""GET""", prefix,"""controllers.Application.index"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """assets/$file<.+>""","""controllers.Assets.at(path:String = "/public", file:String)""")).foldLeft(List.empty[(String,String,String)]) { (s,e) => e match {
+
+// @LINE:8
+private[this] lazy val controllers_PasswordReset_reset2 = Route("POST", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("reset"))))
+        
+
+// @LINE:11
+private[this] lazy val controllers_Assets_at3 = Route("GET", PathPattern(List(StaticPart(Routes.prefix),StaticPart(Routes.defaultPrefix),StaticPart("assets/"),DynamicPart("file", """.+"""))))
+        
+def documentation = List(("""GET""", prefix,"""controllers.Application.index"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """reset""","""controllers.PasswordReset.index"""),("""POST""", prefix + (if(prefix.endsWith("/")) "" else "/") + """reset""","""controllers.PasswordReset.reset"""),("""GET""", prefix + (if(prefix.endsWith("/")) "" else "/") + """assets/$file<.+>""","""controllers.Assets.at(path:String = "/public", file:String)""")).foldLeft(List.empty[(String,String,String)]) { (s,e) => e match {
   case r @ (_,_,_) => s :+ r.asInstanceOf[(String,String,String)]
   case l => s ++ l.asInstanceOf[List[(String,String,String)]] 
 }}
@@ -51,8 +59,24 @@ case controllers_Application_index0(params) => {
 }
         
 
-// @LINE:9
-case controllers_Assets_at1(params) => {
+// @LINE:7
+case controllers_PasswordReset_index1(params) => {
+   call { 
+        invokeHandler(controllers.PasswordReset.index, HandlerDef(this, "controllers.PasswordReset", "index", Nil,"GET", """""", Routes.prefix + """reset"""))
+   }
+}
+        
+
+// @LINE:8
+case controllers_PasswordReset_reset2(params) => {
+   call { 
+        invokeHandler(controllers.PasswordReset.reset, HandlerDef(this, "controllers.PasswordReset", "reset", Nil,"POST", """""", Routes.prefix + """reset"""))
+   }
+}
+        
+
+// @LINE:11
+case controllers_Assets_at3(params) => {
    call(Param[String]("path", Right("/public")), params.fromPath[String]("file", None)) { (path, file) =>
         invokeHandler(controllers.Assets.at(path, file), HandlerDef(this, "controllers.Assets", "at", Seq(classOf[String], classOf[String]),"GET", """ Map static resources from the /public folder to the /assets URL path""", Routes.prefix + """assets/$file<.+>"""))
    }
